@@ -1,0 +1,38 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      yarn install --frozen-lockfile
+      yarn build
+    displayName: 'Install Dependencies & Build'
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+    displayName: 'Archive Build Artifacts'
+
+  - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    artifact: drop
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'YOUR_AZURE_SERVICE_CONNECTION'
+      appType: 'webApp'
+      appName: 'YOUR_APP_NAME'
+      package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    displayName: 'Deploy to Azure Web App'

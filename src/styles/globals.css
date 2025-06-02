@@ -1,0 +1,8 @@
+@import './tailwind.css';
+
+/* Add any global overrides below */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
