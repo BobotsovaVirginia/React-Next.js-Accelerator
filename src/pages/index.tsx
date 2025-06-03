@@ -5,12 +5,12 @@ import { useAuth } from '@hooks/useAuth';
 import { useAppContext } from '@context/AppContext';
 import PrimaryButton from '@components/Button/Button';
 import { useEffect, useState } from 'react';
-import { getAllServices, Customer } from '@services/serviceApi';
+import { getAllServices, Service } from '@services/serviceApi';
 
 const Home: NextPage = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const { user, setUser } = useAppContext();
-  const [services, setServices] = useState<Customer[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
                 className="border rounded p-2 flex justify-between items-center"
               >
                 <div>
-                  <strong>{c.name}</strong> ({c.email})
+                  <strong>{c.name}</strong>
                 </div>
                 <Link href={`/services/${c.id}`} className="text-blue-600 underline">
                   View Details

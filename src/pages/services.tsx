@@ -17,7 +17,7 @@ const ServicesPage: NextPage<Props> = ({ services }) => {
             className="border rounded p-2 flex justify-between items-center"
           >
             <div>
-              <strong>{c.name}</strong> ({c.email})
+              <strong>{c.name}</strong>
             </div>
             <Link href={`/services/${c.id}`} className="text-blue-600 underline">
               View Details
